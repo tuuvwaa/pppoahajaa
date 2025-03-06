@@ -276,7 +276,7 @@ FruitTab:AddButton({
     Title = "Sera Hub",
     Description = "Auto Nhặt Fruit✅",
     Callback = function()
-        loadstring(game:HttpGet("https://serahub.site/scripts/farmfruit.txt"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/ScriptMaru/refs/heads/main/MaruHubPremium.Lua"))()
     end
 })
 OtherTab:AddButton({
