@@ -2,7 +2,7 @@
 local Library = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOogway/Fluent-Renewed/releases/latest/download/Fluent.luau"))()
 -- Âm thanh khởi động
 local startupSound = Instance.new("Sound")
-startupSound.SoundId = "rbxassetid://116187829923767"
+startupSound.SoundId = "rbxassetid://121855972697835"
 startupSound.Volume = 500 -- Điều chỉnh âm lượng nếu cần
 startupSound.Looped = false -- Không lặp lại âm thanh
 startupSound.Parent = game.CoreGui-- Đặt parent vào CoreGui để đảm bảo âm thanh phát
