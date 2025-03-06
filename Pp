@@ -2,14 +2,14 @@
 local Library = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOogway/Fluent-Renewed/releases/latest/download/Fluent.luau"))()
 -- Âm thanh khởi động
 local startupSound = Instance.new("Sound")
-startupSound.SoundId = "rbxassetid://121855972697835"
-startupSound.Volume = 500 -- Điều chỉnh âm lượng nếu cần
+startupSound.SoundId = "rbxassetid://8594342648"
+startupSound.Volume = 5000 -- Điều chỉnh âm lượng nếu cần
 startupSound.Looped = false -- Không lặp lại âm thanh
 startupSound.Parent = game.CoreGui-- Đặt parent vào CoreGui để đảm bảo âm thanh phát
 startupSound:Play() -- Phát âm thanh khi script chạy
 -- Tạo cửa sổ chính
 local Window = Library:CreateWindow{
-    Title = "Tuấn Anh IOS",
+    Title = "Tuấn Anh DepZai",
     SubTitle = "discord.gg/tEeQZXtEZv",
     TabWidth = 160,
     Size = UDim2.fromOffset(1280, 860),
@@ -27,7 +27,7 @@ screenGui.Parent = game.CoreGui
 local toggleButton = Instance.new("ImageButton")
 toggleButton.Size = UDim2.new(0, 45, 0, 45) -- Kích thước nhỏ, hình vuông
 toggleButton.Position = UDim2.new(0, 10, 0, 10) -- Gần góc trái trên
-toggleButton.Image = "rbxassetid://136991235575173" -- Hình ảnh của nút
+toggleButton.Image = "rbxassetid://124229496087770" -- Hình ảnh của nút
 toggleButton.BackgroundTransparency = 1 -- Không có nền
 toggleButton.Parent = screenGui
 
