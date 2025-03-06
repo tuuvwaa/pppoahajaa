@@ -272,7 +272,34 @@ ChestTab:AddToggle("TuanAnhIOS_Toggle", {
         end
     end
 })
-
+FruitTab:AddButton({
+    Title = "Sera Hub",
+    Description = "Auto Nhặt Fruit✅",
+    Callback = function()
+        loadstring(game:HttpGet("https://serahub.site/scripts/farmfruit.txt"))()
+    end
+})
+OtherTab:AddButton({
+    Title = "Hop Sever",
+    Description = "Đổi Sever✅",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/ScriptMaru/refs/heads/main/MaruHubPremium.Lua"))()
+    end
+})
+OtherTab:AddButton({
+    Title = "Vào Lại Sever",
+    Description = "Tham Gia Lại Sever✅",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/ScriptMaru/refs/heads/main/MaruHubPremium.Lua"))()
+    end
+})
+OtherTab:AddButton({
+    Title = "Hop Sever Ít Người",
+    Description = "Đổi Sever✅",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/ScriptMaru/refs/heads/main/MaruHubPremium.Lua"))()
+    end
+})
 -- Tab Fruit
 FruitTab:AddToggle("Find Fruit", {
     Title = "Nhặt Trái",
