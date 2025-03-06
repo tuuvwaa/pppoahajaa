@@ -272,13 +272,6 @@ ChestTab:AddToggle("TuanAnhIOS_Toggle", {
         end
     end
 })
-FruitTab:AddButton({
-    Title = "Sera Hub",
-    Description = "Auto Nhặt Fruit✅",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/ScriptMaru/refs/heads/main/MaruHubPremium.Lua"))()
-    end
-})
 OtherTab:AddButton({
     Title = "Hop Sever",
     Description = "Đổi Sever✅",
@@ -301,8 +294,36 @@ OtherTab:AddButton({
     end
 })
 FruitTab:AddButton({
+    Title = "Mưa Khói",
+    Description = "",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/ScriptMaru/refs/heads/main/MaruHubPremium.Lua"))()
+    end
+})
+FruitTab:AddButton({
     Title = "Mưa Trái",
     Description = "",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/ScriptMaru/refs/heads/main/MaruHubPremium.Lua"))()
+    end
+})
+ChestTab:AddButton({
+    Title = "Trade Scam",
+    Description = "",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/ScriptMaru/refs/heads/main/MaruHubPremium.Lua"))()
+    end
+})
+ChestTab:AddButton({
+    Title = "Fix Lag",
+    Description = "Để Treo Game",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/FixLagFull/refs/heads/main/FixlagVipTanh"))()
+    end
+})
+FruitTab:AddButton({
+    Title = "Haki Màu",
+    Description = "Mua Haki Màu Hồng",
     Callback = function()
         loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/ScriptMaru/refs/heads/main/MaruHubPremium.Lua"))()
     end
