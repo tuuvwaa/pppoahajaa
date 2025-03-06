@@ -217,6 +217,30 @@ workspace.ChildRemoved:Connect(function(child)
     end
 end)
 
+TanhTab:AddButton({
+    Title = "discord.gg/tEeQZXtEZv",
+    Description = "Nhấn để copy link Discord",
+    Callback = function()
+        setclipboard("https://discord.gg/tEeQZXtEZv")
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Thông báo",
+            Text = "Đã sao chép link Discord!",
+            Duration = 3
+        })
+    end
+})
+TanhTab:AddButton({
+    Title = "Phở Bò:Tuấn Anh",
+    Description = "Nhấn để copy link FaceBook",
+    Callback = function()
+        setclipboard("https://www.facebook.com/tuanangg10")
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Thông báo",
+            Text = "Đã sao chép link FaceBook!",
+            Duration = 3
+        })
+    end
+})
 -- Tab Main
 MainTab:AddToggle("Kill Aura", {
     Title = "Haki Bá Vương",
