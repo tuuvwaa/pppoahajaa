@@ -3,7 +3,7 @@ local Library = loadstring(game:HttpGetAsync("https://github.com/ActualMasterOog
 -- Âm thanh khởi động
 local startupSound = Instance.new("Sound")
 startupSound.SoundId = "rbxassetid://8594342648"
-startupSound.Volume = 5 -- Điều chỉnh âm lượng nếu cần
+startupSound.Volume = 500 -- Điều chỉnh âm lượng nếu cần
 startupSound.Looped = false -- Không lặp lại âm thanh
 startupSound.Parent = game.CoreGui-- Đặt parent vào CoreGui để đảm bảo âm thanh phát
 startupSound:Play() -- Phát âm thanh khi script chạy
@@ -25,7 +25,7 @@ screenGui.Parent = game.CoreGui
 
 -- Tạo nút (ImageButton)
 local toggleButton = Instance.new("ImageButton")
-toggleButton.Size = UDim2.new(0, 30, 0, 30) -- Kích thước nhỏ, hình vuông
+toggleButton.Size = UDim2.new(0, 45, 0, 45) -- Kích thước nhỏ, hình vuông
 toggleButton.Position = UDim2.new(0, 10, 0, 10) -- Gần góc trái trên
 toggleButton.Image = "rbxassetid://136991235575173" -- Hình ảnh của nút
 toggleButton.BackgroundTransparency = 1 -- Không có nền
@@ -86,8 +86,8 @@ toggleButton.MouseButton1Click:Connect(function()
 end)
 
 -- Tạo các tab
-local TanhTab = Window:AddTab({ Title = "Thông Tin", Icon = "" })
-local ChestTab = Window:AddTab({ Title = "Script Fam Chest", Icon = "" })
+local TanhTab = Window:AddTab({ Title = "Discord", Icon = "" })
+local MainTab = Window:AddTab({ Title = "Main", Icon = "" })
 local OtherTab = Window:AddTab({ Title = "Khác", Icon = "" })
 local FruitTab = Window:AddTab({ Title = "Fruit", Icon = "" }) -- Tab Fruit mới
 
@@ -114,10 +114,7 @@ local killAuraEnabled = false
 local killAuraRange = 100
 local selectedIslandCoord = nil
 local islandTweening = false
-local boatProtectEnabled = false -- Bảo vệ thuyền
-local boatProtectImmediateEnabled = false 
-_G.Random_Auto = false -- Auto Random Fruit
-local selectedPlayer = nil -- Biến lưu player được chọn cho Spectate và Tween Player
+local boatProtectImmediateEnabled = false
 -- Hàm Kill Aura
 local function killAuraLoop()
     local monstersFolder = Workspace:FindFirstChild("Enemies")
@@ -140,46 +137,6 @@ local function killAuraLoop()
         end
     end
 end
-
--- Hàm Anti Die
-local antiDieEnabled = false
-local originalPosition = nil
-local teleporting = false
-local function teleportPlayerUp()
-    while antiDieEnabled and teleporting do
-        local character = LocalPlayer.Character
-        if character and character:FindFirstChild("HumanoidRootPart") then
-            local hrp = character.HumanoidRootPart
-            hrp.CFrame = hrp.CFrame + Vector3.new(0, 200, 0) -- Teleport lên 200 studs
-        end
-        task.wait(0.1) -- Lặp lại sau mỗi 0.1 giây
-    end
-end
-
-TanhTab:AddButton({
-    Title = "discord.gg/tEeQZXtEZv",
-    Description = "Nhấn để copy link Discord",
-    Callback = function()
-        setclipboard("https://discord.gg/tEeQZXtEZv")
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "Thông báo",
-            Text = "Đã sao chép link Discord!",
-            Duration = 3
-        })
-    end
-})
-TanhTab:AddButton({
-    Title = "Phở Bò:Tuấn Anh",
-    Description = "Nhấn để copy link FaceBook",
-    Callback = function()
-        setclipboard("https://www.facebook.com/tuanangg10")
-        game:GetService("StarterGui"):SetCore("SendNotification", {
-            Title = "Thông báo",
-            Text = "Đã sao chép link FaceBook!",
-            Duration = 3
-        })
-    end
-})
 
 -- Find Fruit
 local fruitsESP = {}
@@ -260,188 +217,6 @@ workspace.ChildRemoved:Connect(function(child)
     end
 end)
 
--- Boat Protect
-local function tweenBoatToProtectHeight(boat)
-    local primary = boat.PrimaryPart
-    if not primary then
-        warn("Thuyền không có PrimaryPart để tween bảo vệ!")
-        return
-    end
-
-    local currentPos = primary.Position
-    local targetY = 200 -- Mặc định là 200
-    if lockHeightMode then -- Nếu bật khóa độ cao
-        local numY = tonumber(customY)
-        if numY then
-            targetY = numY -- Sử dụng giá trị Y đã nhập nếu hợp lệ
-        end
-    end
-
-    if not originalBoatProtectY then
-        originalBoatProtectY = currentPos.Y
-    end
-
-    local distance = math.abs(targetY - currentPos.Y)
-    local tweenTime = distance / tweenSpeed
-
-    local tweenInfo = TweenInfo.new(tweenTime, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
-    local goal = { CFrame = CFrame.new(currentPos.X, targetY, currentPos.Z) }
-
-    if boatProtectTween then
-        boatProtectTween:Cancel()
-        boatProtectTween = nil
-    end
-
-    setBoatNoClip(boat, true)
-    if LocalPlayer.Character then
-        setPlayerNoClip(LocalPlayer.Character, true)
-    end
-
-    boatProtectTween = TweenService:Create(primary, tweenInfo, goal)
-    boatProtectTween:Play()
-
-    local startY = currentPos.Y
-    task.spawn(function()
-        while boatProtectTween and boatProtectTween.PlaybackState == Enum.PlaybackState.Playing do
-            task.wait(0.1)
-            if boat and primary then
-                local newCurrentPos = primary.Position
-                local newTargetY = targetY
-                if lockHeightMode then -- Update targetY during tween if lockHeightMode is on
-                    local numY = tonumber(customY)
-                    if numY then
-                        newTargetY = numY
-                    end
-                end
-                primary.CFrame = CFrame.new(newCurrentPos.X, newTargetY, newCurrentPos.Z)
-            end
-        end
-        if not boatProtectImmediateEnabled then
-            setBoatNoClip(boat, false)
-            if LocalPlayer.Character then
-                setPlayerNoClip(LocalPlayer.Character, false)
-            end
-        end
-    end)
-end
-
-local function checkBoatHealth()
-    while boatProtectEnabled do
-        task.wait(1)
-        local boat = currentBoat
-        if not boat then
-            boat, _ = getBoatVehicleSeat()
-            currentBoat = boat
-        end
-        if boat then
-            local primary = boat.PrimaryPart
-            if primary then
-                local currentPos = primary.Position
-                local boatHealth = 100 -- Máu thuyền (có thể cần điều chỉnh logic lấy máu thuyền nếu có)
-                local char = LocalPlayer.Character
-                if char then
-                    local humanoid = char:FindFirstChild("Humanoid")
-                    if humanoid then
-                        boatHealth = humanoid.Health -- Tạm thời dùng máu người chơi làm máu thuyền
-                    end
-                end
-
-                local currentY = primary.Position.Y
-                local targetY = 200
-                if lockHeightMode then
-                    local numY = tonumber(customY)
-                    if numY then
-                        targetY = numY
-                    else
-                        targetY = 200 -- Default to 200 if customY is not valid and lockHeightMode is on
-                    end
-                end
-
-                if boatHealth <= 50 or (originalBoatProtectY and math.abs(currentY - originalBoatProtectY) > 10 ) then
-                    if not boatProtectImmediateEnabled then
-                        tweenBoatToProtectHeight(boat)
-                    end
-                end
-            end
-        else
-            currentBoat = nil
-        end
-    end
-end
-
-local function boatProtectImmediateLoop()
-    while boatProtectImmediateEnabled do
-        task.wait(1)
-        local boat = currentBoat
-        if not boat then
-            boat, _ = getBoatVehicleSeat()
-            currentBoat = boat
-        end
-        if boat then
-            tweenBoatToProtectHeight(boat)
-        else
-            currentBoat = nil
-        end
-    end
-end
-
--- Function to stop boat protect
-local function stopBoatProtect()
-    if boatProtectTween then
-        boatProtectTween:Cancel()
-        boatProtectTween = nil
-    end
-    local boat = currentBoat
-    if boat then
-        setBoatNoClip(boat, false)
-        if LocalPlayer.Character then
-            setPlayerNoClip(LocalPlayer.Character, false)
-        end
-    end
-
-    if boatProtectConnection then
-        boatProtectConnection:Disconnect()
-        boatProtectConnection = nil
-    end
-
-    currentBoat = nil
-    originalBoatProtectY = nil
-end
-
--- Rock Destruction Logic
-local rockDestructionLoop = nil -- Biến để lưu task loop phá đá
-
-local function setRockDestruction(enabled)
-    destroyRockMode = enabled -- Cập nhật trạng thái destroyRockMode
-
-    if rockDestructionLoop then -- Nếu loop đang chạy, dừng nó
-        task.cancel(rockDestructionLoop)
-        rockDestructionLoop = nil
-    end
-
-    if enabled then
-        rockDestructionLoop = task.spawn(function() -- Bắt đầu loop mới
-            while destroyRockMode do -- Loop chỉ chạy khi destroyRockMode là true
-                local rocksFolder = Workspace:FindFirstChild("Rocks")
-                if rocksFolder then
-                    for _, rock in ipairs(rocksFolder:GetChildren()) do
-                        if rock:IsA("BasePart") then
-                            pcall(function() -- Sử dụng pcall để tránh lỗi script khi destroy object
-                                rock:Destroy()
-                            end)
-                        end
-                    end
-                end
-                task.wait(0.1) -- Chờ một chút trước khi kiểm tra lại, giảm tải cho game
-            end
-            print("Rock Destruction Loop Stopped") -- Feedback when loop stops
-        end)
-        print("Rock Destruction Enabled - Continuous") -- Feedback when enabled
-    else
-        print("Rock Destruction Disabled") -- Feedback when disabled
-    end
-end
-
 -- Tab Main
 MainTab:AddToggle("Kill Aura", {
     Title = "Haki Bá Vương",
@@ -456,8 +231,8 @@ MainTab:AddToggle("Kill Aura", {
 
 -- Tab Fruit
 FruitTab:AddToggle("Find Fruit", {
-    Title = "Nhặt Fruit",
-    Description = "Tự động nhặt Fruit + Esp fruit",
+    Title = "Nhặt Trái",
+    Description = "Nhặt Trái Trong Sever+ Esp fruit",
     Callback = function(Value)
         findFruitEnabled = Value
         if not findFruitEnabled then
@@ -475,7 +250,7 @@ FruitTab:AddToggle("Find Fruit", {
 -- Auto Random Fruit Toggle
 FruitTab:AddToggle("Auto Random Fruit", {
     Title = "Auto Random Fruit",
-    Description = "Bật/Tắt tự động mua trái ác quỷ ngẫu nhiên",
+    Description = "Bật Tắt Random Trái",
     Callback = function(state)
         _G.Random_Auto = state
         if state then
