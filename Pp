@@ -87,7 +87,7 @@ end)
 
 -- Tạo các tab
 local TanhTab = Window:AddTab({ Title = "Discord", Icon = "" })
-local MainTab = Window:AddTab({ Title = "Main", Icon = "" })
+local ChestTab = Window:AddTab({ Title = "Main", Icon = "" })
 local OtherTab = Window:AddTab({ Title = "Khác", Icon = "" })
 local FruitTab = Window:AddTab({ Title = "Fruit", Icon = "" }) -- Tab Fruit mới
 
@@ -241,14 +241,34 @@ TanhTab:AddButton({
         })
     end
 })
--- Tab Main
-MainTab:AddToggle("Kill Aura", {
+-- Tab Chest
+ChestTab:AddToggle("Kill Aura", {
     Title = "Haki Bá Vương",
     Description = "Bật/Tắt Haki Bá Vương",
     Callback = function(Value)
         killAuraEnabled = Value
         if killAuraEnabled then
             task.spawn(killAuraLoop)
+        end
+    end
+})
+ChestTab:AddToggle("TuanAnhIOS_Toggle", {
+    Title = "Auto Nhặt Rương",
+    Description = "Bật Tắt Tuấn Anh DepZai✅",
+    Callback = function(value)
+        _G.TuanAnhIOS_Enabled = value
+
+        if value then
+            -- Bật script (chạy trên luồng riêng)
+            ScriptThread = task.spawn(function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/AutoChest/refs/heads/main/AutoChestTuanAnhIOS.Lua"))()
+            end)
+        else
+            -- Dừng script bằng cách hủy luồng
+            if ScriptThread then
+                task.cancel(ScriptThread)
+                ScriptThread = nil
+            end
         end
     end
 })
