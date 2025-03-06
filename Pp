@@ -300,6 +300,13 @@ OtherTab:AddButton({
         loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/ScriptMaru/refs/heads/main/MaruHubPremium.Lua"))()
     end
 })
+FruitTab:AddButton({
+    Title = "Mưa Trái",
+    Description = "",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/AnhDzaiScript/ScriptMaru/refs/heads/main/MaruHubPremium.Lua"))()
+    end
+})
 -- Tab Fruit
 FruitTab:AddToggle("Find Fruit", {
     Title = "Nhặt Trái",
